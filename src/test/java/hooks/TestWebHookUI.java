@@ -15,12 +15,12 @@ public class TestWebHookUI {
 
 	@Before(order = 1, value = "@chrome")
 	public void useChrome() {
-		System.setProperty(TestKeys.BROWSER_KEY, "chrome");
+		DriverManager.setupDriver("chrome");
 	}
 
 	@Before(order = 1, value = "@firefox")
 	public void useFirefox() {
-		System.setProperty(TestKeys.BROWSER_KEY, "firefox");
+		DriverManager.setupDriver("firefox");
 	}
 
 	@Before(order = 2, value = "@ui or @web or @e2e")

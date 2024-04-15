@@ -29,7 +29,7 @@ public class DriverManager {
 		// WARN: Nothing should be written here.
 	}
 
-	private static void setUpDriver() {
+	private static void setupDriver() {
 		if (System.getProperty(TestKeys.BROWSER_KEY) != null)
 			browser = System.getProperty(TestKeys.BROWSER_KEY).toLowerCase();
 		if (System.getProperty(TestKeys.HEADLESS_KEY) != null)
@@ -37,9 +37,13 @@ public class DriverManager {
 		isSet = true;
 	}
 
+	public static void setupDriver(String browser) {
+		DriverManager.browser = browser;
+	}
+
 	public static synchronized WebDriver getDriver() {
 		if (!isSet)
-			setUpDriver();
+			setupDriver();
 		if (localDriver == null)
 			localDriver = new ThreadLocal<WebDriver>();
 		if (localDriver.get() == null)
