@@ -23,4 +23,14 @@ public class ConfigReader {
 		}
 	}
 
+	public static boolean getBooleanValue(String key) {
+		loadPropertiesFile();
+		return Boolean.parseBoolean(getTextValue(key));
+	}
+
+	public static long getLongValue(String key) {
+		loadPropertiesFile();
+		return Long.parseLong(getTextValue(key));
+	}
+
 }
