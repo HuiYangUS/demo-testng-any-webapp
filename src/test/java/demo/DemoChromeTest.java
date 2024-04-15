@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 
 import utilities.ConfigReader;
 
-public class SampleTest {
+public class DemoChromeTest {
 
 	private static WebDriver driver;
 
@@ -31,7 +31,8 @@ public class SampleTest {
 
 	@AfterMethod
 	public void afterTest() {
-		driver.quit();
+		if (driver != null)
+			driver.quit();
 	}
 
 }

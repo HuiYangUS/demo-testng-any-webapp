@@ -1,5 +1,7 @@
 package demo;
 
+import static org.testng.Assert.*;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -16,7 +18,7 @@ public class DemoEdgeTest {
 
 	private static WebDriver driver;
 
-	@Test
+	@Test(dependsOnMethods = "isWindowsTest")
 	public void testGoogleSearch() throws InterruptedException {
 		System.setProperty("webdriver.edge.driver", ConfigReader.getTextValue("edgedriverBinPath"));
 		Map<String, Object> capabilities = new HashMap<>(); // Create capabilities
@@ -38,9 +40,15 @@ public class DemoEdgeTest {
 		Thread.sleep(5000); // Let the user actually see something!
 	}
 
+	@Test
+	public void isWindowsTest() {
+		assertTrue(System.getProperty("os.name").toLowerCase().contains("windows"));
+	}
+
 	@AfterMethod
 	public void afterTest() {
-		driver.quit();
+		if (driver != null)
+			driver.quit();
 	}
 
 }
