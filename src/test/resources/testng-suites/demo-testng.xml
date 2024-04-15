@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<!-- Demo Suite By Class -->
+<suite name="Demo Suite By Class">
+	<!-- Sample Test -->
+	<test name="Demo Chrome Test">
+		<classes>
+			<class name="demo.DemoChromeTest" />
+		</classes>
+	</test>
+</suite> 
