@@ -31,7 +31,8 @@ public class DemoFirefoxTest {
 
 	@AfterMethod
 	public void afterTest() {
-		driver.quit();
+		if (driver != null)
+			driver.quit();
 	}
 
 }
