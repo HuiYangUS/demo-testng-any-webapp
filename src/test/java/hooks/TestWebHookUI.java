@@ -8,22 +8,19 @@ import utilities.ConfigReader;
 import utilities.DataManager;
 import utilities.DriverManager;
 import utilities.PageManager;
+import utilities.TestKeys;
 import utilities.WebJobs;
 
 public class TestWebHookUI {
 
 	@Before(order = 1, value = "@chrome")
 	public void useChrome() {
-		setupChrome();
+		System.setProperty(TestKeys.BROWSER_KEY, "chrome");
 	}
 
 	@Before(order = 1, value = "@firefox")
 	public void useFirefox() {
-		System.setProperty("browser", "firefox");
-	}
-
-	private static void setupChrome() {
-		System.setProperty("browser", "chrome");
+		System.setProperty(TestKeys.BROWSER_KEY, "firefox");
 	}
 
 	@Before(order = 2, value = "@ui or @web or @e2e")
@@ -41,6 +38,7 @@ public class TestWebHookUI {
 		DriverManager.reset();
 		PageManager.reset();
 		DataManager.reset();
+		System.clearProperty(TestKeys.BROWSER_KEY);
 	}
 
 }
