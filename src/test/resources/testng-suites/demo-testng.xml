@@ -3,7 +3,7 @@
 
 <!-- Demo Suite By Class -->
 <suite name="Demo Suite By Class">
-	<!-- Sample Test -->
+	<!-- Demo Test -->
 	<test name="Demo Chrome Test">
 		<classes>
 			<class name="demo.DemoChromeTest" />
