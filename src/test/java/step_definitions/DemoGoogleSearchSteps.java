@@ -13,7 +13,7 @@ import utilities.TestUtils;
 public class DemoGoogleSearchSteps {
 
 	private static String url = "http://www.google.com/";
-	private WebDriver driver = DriverManager.getDriver();
+	private WebDriver driver = DriverManager.getInstance().getDriver();
 
 	@Given("user is on [Google] home page")
 	public void user_is_on_google_home_page() {

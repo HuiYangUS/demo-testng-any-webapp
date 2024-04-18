@@ -1,8 +1,8 @@
 package utilities;
 
+import java.util.concurrent.TimeUnit;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -18,18 +18,27 @@ import org.openqa.selenium.firefox.FirefoxOptions;
  */
 public class DriverManager {
 
-	private static ThreadLocal<WebDriver> localDriver;
+	private static ThreadLocal<DriverManager> localDriverManager;
 
-	private static String browser = ConfigReader.getTextValue(TestKeys.BROWSER_KEY);
-	private static boolean headless = ConfigReader.getBooleanValue("headless");
-	private static boolean isSet;
-	private static int waitTime = 5;
+	private WebDriver driver;
+	private String browser = ConfigReader.getTextValue(TestKeys.BROWSER_KEY);
+	private boolean headless = ConfigReader.getBooleanValue("headless");
+	private boolean isSet;
+	private int waitTime = 5;
 
 	private DriverManager() {
 		// WARN: Nothing should be written here.
 	}
 
-	private static void setupDriver() {
+	public static DriverManager getInstance() {
+		if (localDriverManager == null)
+			localDriverManager = new ThreadLocal<DriverManager>();
+		if (localDriverManager.get() == null)
+			localDriverManager.set(new DriverManager());
+		return localDriverManager.get();
+	}
+
+	private void setupDriver() {
 		if (System.getProperty(TestKeys.BROWSER_KEY) != null)
 			browser = System.getProperty(TestKeys.BROWSER_KEY).toLowerCase();
 		if (System.getProperty(TestKeys.HEADLESS_KEY) != null)
@@ -37,36 +46,40 @@ public class DriverManager {
 		isSet = true;
 	}
 
-	public static void setupDriver(String browser) {
-		DriverManager.browser = browser;
+	public void setupDriver(String browser) {
+		this.browser = browser;
 	}
 
-	public static synchronized WebDriver getDriver() {
+	public void setupDriver(boolean headless) {
+		this.headless = headless;
+	}
+
+	public void setupDriver(String browser, boolean headless) {
+		this.browser = browser;
+		this.headless = headless;
+	}
+
+	public WebDriver getDriver() {
 		if (!isSet)
 			setupDriver();
-		if (localDriver == null)
-			localDriver = new ThreadLocal<WebDriver>();
-		if (localDriver.get() == null)
-			localDriver.set(initDriver());
-		return localDriver.get();
+		if (driver == null)
+			initDriver();
+		return driver;
 	}
 
 	public static void reset() {
-		// Local driver cannot be null
-		if (localDriver != null && localDriver.get() != null) {
-			localDriver.get().quit();
-			localDriver.remove();
-		}
-		isSet = false;
+		if (localDriverManager.get().driver != null)
+			localDriverManager.get().driver.quit();
+		if (localDriverManager != null && localDriverManager.get() != null)
+			localDriverManager.remove();
 	}
 
-	private static void configDriver(WebDriver driver) {
+	private void configDriver(WebDriver driver) {
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(waitTime, TimeUnit.SECONDS);
 	}
 
-	private static WebDriver initDriver() {
-		WebDriver driver = null;
+	private void initDriver() {
 		switch (browser) {
 		case "chrome":
 			System.setProperty("webdriver.chrome.driver", ConfigReader.getTextValue("chromedriverBinPath"));
@@ -89,14 +102,15 @@ public class DriverManager {
 		default:
 			throw new RuntimeException("No such browser in the system.");
 		}
+		if (driver != null)
+			System.out.println(driver.toString().replaceAll("[(].*[)]", ""));
 		configDriver(driver);
-		return driver;
 	}
 
 	/**
 	 * Set specific conditions of <Chrome> for this application
 	 */
-	private static void setChromeOptions(ChromeOptions chromeOptions) {
+	private void setChromeOptions(ChromeOptions chromeOptions) {
 		if (headless)
 			chromeOptions.addArguments("--headless");
 	}
@@ -104,7 +118,7 @@ public class DriverManager {
 	/**
 	 * Set specific conditions of <Edge> for this application
 	 */
-	private static void setEdgeOptions(EdgeOptions edgeOptions) {
+	private void setEdgeOptions(EdgeOptions edgeOptions) {
 		Map<String, Object> capabilities = new HashMap<>(); // Create capabilities
 		Map<String, Object> prefs = new HashMap<String, Object>(); // Create prefs
 		prefs.put("user_experience_metrics.personalization_data_consent_enabled", true); // Turn off personal prompt
@@ -115,8 +129,10 @@ public class DriverManager {
 	/**
 	 * Set specific conditions of <Firefox> for this application
 	 */
-	private static void setFirefoxOptions(FirefoxOptions firefoxOptions) {
+	private void setFirefoxOptions(FirefoxOptions firefoxOptions) {
 		firefoxOptions.addPreference("geo.enabled", false); // Turn off geographical locator
+		if (headless)
+			firefoxOptions.addArguments("-headless");
 	}
 
 }
