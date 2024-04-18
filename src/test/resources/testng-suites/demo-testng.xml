@@ -6,7 +6,7 @@
 	<!-- Demo Test -->
 	<test name="Demo Chrome Test">
 		<classes>
-			<class name="demo.DemoChromeTest" />
+			<class name="ui.demo.DemoChromeTest" />
 		</classes>
 	</test>
 </suite> 
