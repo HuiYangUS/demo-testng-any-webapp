@@ -19,7 +19,7 @@
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>2.15.1</version>
+			<version>2.16.1</version>
 		</dependency>
 
 		<!-- UI automation - old school -->
@@ -29,35 +29,35 @@
 			<version>3.141.59</version>
 		</dependency>
 
-		<!-- back up support for selenium-pie-1 -->
+		<!-- back up support-1 for selenium-pie -->
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>33.1.0-jre</version>
 		</dependency>
 
-		<!-- back up support for selenium-pie-2 -->
+		<!-- back up support-2 for selenium-pie -->
 		<dependency>
 			<groupId>com.squareup.okio</groupId>
 			<artifactId>okio</artifactId>
 			<version>3.9.0</version>
 		</dependency>
 
-		<!-- back up support for selenium-pie-3 -->
+		<!-- back up support-3 for selenium-pie -->
 		<dependency>
 			<groupId>com.squareup.okhttp3</groupId>
 			<artifactId>okhttp</artifactId>
 			<version>4.12.0</version>
 		</dependency>
 
-		<!-- logging-1 -->
+		<!-- logging framework -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>2.0.13</version>
 		</dependency>
 
-		<!-- logging-2 - suppress all logging messages -->
+		<!-- logging framework support - suppress all logging messages -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-nop</artifactId>
@@ -73,7 +73,7 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- BBD -->
+		<!-- BDD -->
 		<dependency>
 			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-java</artifactId>
@@ -96,7 +96,7 @@
 				<version>3.2.5</version>
 				<configuration>
 					<properties>
-						<!-- max thread counts for parallel testing -->
+						<!-- maximum thread count for parallel testing -->
 						<property>
 							<name>dataproviderthreadcount</name>
 							<value>3</value>
