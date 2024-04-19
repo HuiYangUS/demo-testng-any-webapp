@@ -2,7 +2,9 @@ package ui.demo;
 
 import static org.testng.Assert.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -13,20 +15,32 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import utilities.ConfigReader;
+import utilities.TestKeys;
 
 public class DemoEdgeTest {
+
+	private static boolean headless = ConfigReader.getBooleanValue(TestKeys.HEADLESS_KEY);
 
 	private static WebDriver driver;
 
 	@Test(dependsOnMethods = "isWindowsTest")
 	public void testGoogleSearch() throws InterruptedException {
 		System.setProperty("webdriver.edge.driver", ConfigReader.getTextValue("edgedriverBinPath"));
-		Map<String, Object> capabilities = new HashMap<>(); // Create capabilities
-		Map<String, Object> prefs = new HashMap<String, Object>(); // Create prefs
-		prefs.put("user_experience_metrics.personalization_data_consent_enabled", true); // Turn off personal prompt
-		capabilities.put("prefs", prefs);
 		EdgeOptions edgeOptions = new EdgeOptions();
-		edgeOptions.setCapability("ms:edgeOptions", capabilities);
+
+		// Create prefs
+		Map<String, Object> prefs = new HashMap<String, Object>();
+		prefs.put("user_experience_metrics.personalization_data_consent_enabled", true); // Turn off personal prompt
+
+		// Create args
+		List<String> args = new ArrayList<String>();
+		if (headless)
+			args.add("--headless"); // Run headless mode
+
+		Map<String, Object> desiredCapabilities = new HashMap<>();
+		desiredCapabilities.put("prefs", prefs);
+		desiredCapabilities.put("args", args);
+		edgeOptions.setCapability("ms:edgeOptions", desiredCapabilities);
 		driver = new EdgeDriver(edgeOptions);
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);

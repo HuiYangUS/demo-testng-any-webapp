@@ -1,7 +1,9 @@
 package utilities;
 
 import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
@@ -119,11 +121,19 @@ public class DriverManager {
 	 * Set specific conditions of <Edge> for this application
 	 */
 	private void setEdgeOptions(EdgeOptions edgeOptions) {
-		Map<String, Object> capabilities = new HashMap<>(); // Create capabilities
-		Map<String, Object> prefs = new HashMap<String, Object>(); // Create prefs
+		// Create prefs
+		Map<String, Object> prefs = new HashMap<String, Object>();
 		prefs.put("user_experience_metrics.personalization_data_consent_enabled", true); // Turn off personal prompt
-		capabilities.put("prefs", prefs);
-		edgeOptions.setCapability("ms:edgeOptions", capabilities);
+
+		// Create args
+		List<String> args = new ArrayList<String>();
+		if (headless)
+			args.add("--headless"); // Run headless mode
+
+		Map<String, Object> desiredCapabilities = new HashMap<>();
+		desiredCapabilities.put("prefs", prefs);
+		desiredCapabilities.put("args", args);
+		edgeOptions.setCapability("ms:edgeOptions", desiredCapabilities);
 	}
 
 	/**
