@@ -1,13 +1,13 @@
 package utilities;
 
-/**
- * This <ConfigReader> class reads data from the 'config.properties' file in
- * "src/test/resources/configs" folder
- */
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * This <ConfigReader> class reads data from the 'config.properties' file in
+ * "src/test/resources/configs" folder
+ */
 public class ConfigReader {
 
 	private static final String FILE_PATH = "src/test/resources/configs/config.properties";
