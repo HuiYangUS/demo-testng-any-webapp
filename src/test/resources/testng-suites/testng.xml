@@ -14,7 +14,7 @@
 		<parameter name="browser" value="chrome" />
 		<packages>
 			<package name="ui.base" />
-			<package name="ui.labs" />
+			<package name="ui.lab" />
 		</packages>
 	</test>
 
@@ -23,7 +23,7 @@
 		<parameter name="browser" value="firefox" />
 		<packages>
 			<package name="ui.base" />
-			<package name="ui.labs" />
+			<package name="ui.lab" />
 		</packages>
 	</test>
 </suite> 
