@@ -1,4 +1,4 @@
-package ui.labs;
+package ui.lab;
 
 import static org.testng.Assert.*;
 
