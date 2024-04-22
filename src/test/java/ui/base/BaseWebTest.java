@@ -24,6 +24,8 @@ public class BaseWebTest {
 	public void setUp(@Optional("default") String browser) {
 		if (!browser.equalsIgnoreCase("default"))
 			DriverManager.getInstance().setupDriver(browser);
+		else
+			System.out.println("Using default browser driver:");
 		driver = DriverManager.getInstance().getDriver();
 		wait = new WebDriverWait(driver, ConfigReader.getLongValue("timeOut"));
 		System.out.println("Web Test starts:");
