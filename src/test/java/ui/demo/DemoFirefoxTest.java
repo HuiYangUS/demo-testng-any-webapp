@@ -21,12 +21,12 @@ public class DemoFirefoxTest {
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
 		driver.navigate().to(SearchData.url);
-		Thread.sleep(5000); // Let the user actually see something!
+		Thread.sleep(1000); // Let the user actually see something!
 		WebElement searchBox = driver.findElement(By.name("q"));
 		searchBox.sendKeys(SearchData.searchTerm);
-		Thread.sleep(2000); // Let the user actually see something!
+		Thread.sleep(1000); // Let the user actually see something!
 		searchBox.submit();
-		Thread.sleep(5000); // Let the user actually see something!
+		Thread.sleep(2000); // Let the user actually see something!
 	}
 
 	@AfterMethod

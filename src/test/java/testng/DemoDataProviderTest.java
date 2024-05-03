@@ -1,6 +1,6 @@
 package testng;
 
-import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.*;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -14,7 +14,7 @@ public class DemoDataProviderTest {
 
 	@Test(dataProvider = "Demo Data")
 	public void verifyDemoData(String name, Integer age, Boolean isPassed) {
-		assertTrue((age >= 60) == isPassed);
+		assertEquals((boolean) isPassed, (age >= 60));
 		System.out.println("Name: " + name);
 	}
 

@@ -8,7 +8,7 @@ public class TestUtils {
 
 	public static void pause(int time) {
 		try {
-			Thread.sleep(time * 1000);
+			Thread.sleep(time * 1000L);
 		} catch (InterruptedException e) {
 			// Do nothing
 			System.out.println("Thread failed to sleep.");

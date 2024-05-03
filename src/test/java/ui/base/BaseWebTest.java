@@ -17,7 +17,7 @@ public class BaseWebTest {
 	protected static WebDriverWait wait;
 
 	/**
-	 * @Optional(%String) is needed to avoid using 'testng.xml'
+	 * {@code @Optional(%String)} is needed to avoid using 'testng.xml'
 	 */
 	@Parameters({ "browser" })
 	@BeforeMethod(groups = { "ui", "web", "e2e" })
@@ -28,7 +28,7 @@ public class BaseWebTest {
 			System.out.println("Using default browser driver:");
 		driver = DriverManager.getInstance().getDriver();
 		wait = new WebDriverWait(driver, ConfigReader.getLongValue("timeOut"));
-		System.out.println("Web Test starts:");
+		System.out.println("Web Test starts>");
 	}
 
 	@AfterMethod(groups = { "ui", "web", "e2e" })

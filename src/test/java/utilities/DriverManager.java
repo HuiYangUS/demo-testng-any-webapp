@@ -1,10 +1,10 @@
 package utilities;
 
-import java.util.concurrent.TimeUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -26,7 +26,6 @@ public class DriverManager {
 	private String browser = ConfigReader.getTextValue(TestKeys.BROWSER_KEY);
 	private boolean headless = ConfigReader.getBooleanValue("headless");
 	private boolean isSet;
-	private int waitTime = 5;
 
 	private DriverManager() {
 		// WARN: Nothing should be written here.
@@ -34,7 +33,7 @@ public class DriverManager {
 
 	public static DriverManager getInstance() {
 		if (localDriverManager == null)
-			localDriverManager = new ThreadLocal<DriverManager>();
+			localDriverManager = new ThreadLocal<>();
 		if (localDriverManager.get() == null)
 			localDriverManager.set(new DriverManager());
 		return localDriverManager.get();
@@ -44,7 +43,7 @@ public class DriverManager {
 		if (System.getProperty(TestKeys.BROWSER_KEY) != null)
 			browser = System.getProperty(TestKeys.BROWSER_KEY).toLowerCase();
 		if (System.getProperty(TestKeys.HEADLESS_KEY) != null)
-			headless = Boolean.valueOf(System.getProperty(TestKeys.HEADLESS_KEY).toLowerCase());
+			headless = Boolean.parseBoolean(System.getProperty(TestKeys.HEADLESS_KEY).toLowerCase());
 		isSet = true;
 	}
 
@@ -78,6 +77,7 @@ public class DriverManager {
 
 	private void configDriver(WebDriver driver) {
 		driver.manage().window().maximize();
+		int waitTime = 5;
 		driver.manage().timeouts().implicitlyWait(waitTime, TimeUnit.SECONDS);
 	}
 
@@ -122,11 +122,11 @@ public class DriverManager {
 	 */
 	private void setEdgeOptions(EdgeOptions edgeOptions) {
 		// Create prefs
-		Map<String, Object> prefs = new HashMap<String, Object>();
+		Map<String, Object> prefs = new HashMap<>();
 		prefs.put("user_experience_metrics.personalization_data_consent_enabled", true); // Turn off personal prompt
 
 		// Create args
-		List<String> args = new ArrayList<String>();
+		List<String> args = new ArrayList<>();
 		if (headless)
 			args.add("--headless"); // Run headless mode
 
@@ -141,6 +141,10 @@ public class DriverManager {
 	 */
 	private void setFirefoxOptions(FirefoxOptions firefoxOptions) {
 		firefoxOptions.addPreference("geo.enabled", false); // Turn off geographical locator
+		// Use a custom firefox bin location if the default location is not available
+		String firefoxBinPath = ConfigReader.getTextValue("firefoxBinPath");
+		if (firefoxBinPath != null)
+			firefoxOptions.setBinary(firefoxBinPath);
 		if (headless)
 			firefoxOptions.addArguments("-headless");
 	}
