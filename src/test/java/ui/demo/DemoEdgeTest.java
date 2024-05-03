@@ -19,7 +19,7 @@ import utilities.TestKeys;
 
 public class DemoEdgeTest {
 
-	private static boolean headless = ConfigReader.getBooleanValue(TestKeys.HEADLESS_KEY);
+	private static final boolean HEADLESS = ConfigReader.getBooleanValue(TestKeys.HEADLESS_KEY);
 
 	private static WebDriver driver;
 
@@ -29,12 +29,12 @@ public class DemoEdgeTest {
 		EdgeOptions edgeOptions = new EdgeOptions();
 
 		// Create prefs
-		Map<String, Object> prefs = new HashMap<String, Object>();
+		Map<String, Object> prefs = new HashMap<>();
 		prefs.put("user_experience_metrics.personalization_data_consent_enabled", true); // Turn off personal prompt
 
 		// Create args
-		List<String> args = new ArrayList<String>();
-		if (headless)
+		List<String> args = new ArrayList<>();
+		if (HEADLESS)
 			args.add("--headless"); // Run headless mode
 
 		Map<String, Object> desiredCapabilities = new HashMap<>();
@@ -46,12 +46,12 @@ public class DemoEdgeTest {
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
 		driver.navigate().to(SearchData.url);
-		Thread.sleep(5000); // Let the user actually see something!
+		Thread.sleep(1000); // Let the user actually see something!
 		WebElement searchBox = driver.findElement(By.name("q"));
 		searchBox.sendKeys(SearchData.searchTerm);
-		Thread.sleep(2000); // Let the user actually see something!
+		Thread.sleep(1000); // Let the user actually see something!
 		searchBox.submit();
-		Thread.sleep(5000); // Let the user actually see something!
+		Thread.sleep(2000); // Let the user actually see something!
 	}
 
 	@Test

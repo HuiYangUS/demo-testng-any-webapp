@@ -50,7 +50,7 @@
 			<version>4.12.0</version>
 		</dependency>
 
-		<!-- logging framework -->
+		<!-- logging framework - Simple Logging Framework -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -77,14 +77,14 @@
 		<dependency>
 			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-java</artifactId>
-			<version>7.16.1</version>
+			<version>7.17.0</version>
 		</dependency>
 
 		<!-- cucumber support for testng -->
 		<dependency>
 			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-testng</artifactId>
-			<version>7.16.1</version>
+			<version>7.17.0</version>
 		</dependency>
 	</dependencies>
 

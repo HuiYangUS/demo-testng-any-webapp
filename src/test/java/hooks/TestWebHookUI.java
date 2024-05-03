@@ -8,7 +8,7 @@ import utilities.ConfigReader;
 import utilities.DataManager;
 import utilities.DriverManager;
 import utilities.PageManager;
-import utilities.WebJobs;
+import utilities.WebUtils;
 
 public class TestWebHookUI {
 
@@ -31,7 +31,7 @@ public class TestWebHookUI {
 
 	@After(order = 2, value = "@ui or @web or @e2e")
 	public void tearDown(Scenario scenario) {
-		WebJobs jobs = new WebJobs(DriverManager.getInstance().getDriver());
+		WebUtils jobs = new WebUtils(DriverManager.getInstance().getDriver());
 		if (ConfigReader.getBooleanValue("screenshot") && scenario.isFailed())
 			jobs.savesScreenshot();
 		DriverManager.reset();

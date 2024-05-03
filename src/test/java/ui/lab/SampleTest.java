@@ -14,15 +14,15 @@ import utilities.TestUtils;
 
 public class SampleTest extends BaseWebTest {
 
-	private static String url = "http://www.google.com/";
-	private static String searchTerm = "Selenium";
+	private static final String URL = "http://www.google.com/";
+	private static final String SEARCH_TERM = "Selenium";
 
 	@Test(groups = { "ui", "web" })
 	public void testGoogleSearch() {
-		driver.get(url);
+		driver.get(URL);
 		TestUtils.pause(2); // Let the user actually see something!
 		WebElement searchBox = driver.findElement(By.name("q"));
-		searchBox.sendKeys(searchTerm);
+		searchBox.sendKeys(SEARCH_TERM);
 		TestUtils.pause(2); // Let the user actually see something!
 		searchBox.submit();
 		TestUtils.pause(2); // Let the user actually see something!
